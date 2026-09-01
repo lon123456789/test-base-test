@@ -4,20 +4,9 @@ import os
 from pathlib import Path
 
 # Force reload of all modules
-if 'src.audit.missing_confidence' in sys.modules:
-    del sys.modules['src.audit.missing_confidence']
-if 'src.audit.future_leakage' in sys.modules:
-    del sys.modules['src.audit.future_leakage']
-if 'src.audit.ownership' in sys.modules:
-    del sys.modules['src.audit.ownership']
-if 'src.audit.illegal_feedback' in sys.modules:
-    del sys.modules['src.audit.illegal_feedback']
-if 'src.audit.cluster_scope' in sys.modules:
-    del sys.modules['src.audit.cluster_scope']
-if 'src.audit.double_count' in sys.modules:
-    del sys.modules['src.audit.double_count']
-if 'src.dag.dag_validator' in sys.modules:
-    del sys.modules['src.dag.dag_validator']
+for mod in list(sys.modules.keys()):
+    if mod.startswith('src.'):
+        del sys.modules[mod]
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -41,15 +30,27 @@ def run_all():
     except FileNotFoundError:
         print("Error: registry/registry_v0.json not found")
         return {}
-    except json.JSONDecodeError:
-        print("Error: registry/registry_v0.json is not valid JSON")
+    except json.JSONDecodeError as e:
+        print(f"Error: registry/registry_v0.json is not valid JSON: {e}")
         return {}
     
-    sys.stderr.write(f"\n=== AUDIT RUNNING ===\n")
+    # Debug: Check registry content
+    print(f"=== REGISTRY LOADED ===", file=sys.stderr)
+    print(f"Total features: {len(registry.get('features', []))}", file=sys.stderr)
+    
+    # Find and print FUS_DIRECTION and FUS_STRENGTH
+    for feat in registry.get("features", []):
+        if feat["feature_id"] in ["FUS_DIRECTION", "FUS_STRENGTH"]:
+            print(f"{feat['feature_id']}: role={feat.get('primary_role')}, rule={feat.get('missing_data_rule')}", file=sys.stderr)
+    
+    print(f"=== CALLING AUDIT FUNCTIONS ===", file=sys.stderr)
     sys.stderr.flush()
     
     # Run all audit checks
     missing_conf_result = audit_missing_confidence(registry)
+    
+    print(f"=== MISSING_CONFIDENCE RETURNED: {len(missing_conf_result)} violations ===", file=sys.stderr)
+    sys.stderr.flush()
     
     report = {
         "cycles": detect_cycles(registry),
