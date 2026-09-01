@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "required": ["registry_version", "features", "edges"],
+  "properties": {
+    "registry_version": { "type": "string" },
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["feature_id", "layer", "owner_engine", "semantic_concept"],
+        "properties": {
+          "feature_id": { "type": "string" },
+          "feature_name": { "type": "string" },
+          "layer": { "type": "string" },
+          "owner_engine": { "type": "string" },
+          "source_engine": { "type": "string" },
+          "semantic_concept": { "type": "string" },
+          "depends_on": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "edge_type"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "edge_type": { "type": "string" }
+        }
+      }
+    }
+  }
+}
