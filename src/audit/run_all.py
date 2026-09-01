@@ -28,29 +28,22 @@ def run_all():
         print("Error: registry/registry_v0.json is not valid JSON")
         return {}
     
-    # Run all audit checks
-    report = {
-        "registry_version": registry.get("registry_version", "unknown"),
-        "total_features": len(registry.get("features", [])),
-        "total_edges": len(registry.get("edges", [])),
-        "audit_checks": {
-            "cycles": detect_cycles(registry),
-            "future_leakage": audit_future_leakage(registry),
-            "ownership": audit_ownership(registry),
-            "illegal_feedback": audit_illegal_feedback(registry),
-            "cluster_scope": audit_cluster_scope(registry),
-            "double_count": audit_double_count(registry),
-            "missing_confidence": audit_missing_confidence(registry)
-        }
-    }
+    # Debug: Print FUS_DIRECTION and FUS_STRENGTH features
+    fus_features = {f["feature_id"]: f for f in registry["features"] 
+                   if f["feature_id"] in ["FUS_DIRECTION", "FUS_STRENGTH"]}
     
-    # Calculate summary
-    total_violations = sum(
-        len(violations) if isinstance(violations, list) else 0
-        for violations in report["audit_checks"].values()
-    )
-    report["total_violations"] = total_violations
-    report["status"] = "PASS" if total_violations == 0 else "FAIL"
+    # Run all audit checks
+    missing_conf_result = audit_missing_confidence(registry)
+    
+    report = {
+        "cycles": detect_cycles(registry),
+        "future_leakage": audit_future_leakage(registry),
+        "ownership": audit_ownership(registry),
+        "illegal_feedback": audit_illegal_feedback(registry),
+        "cluster_scope": audit_cluster_scope(registry),
+        "double_count": audit_double_count(registry),
+        "missing_confidence": missing_conf_result
+    }
     
     return report
 
