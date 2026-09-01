@@ -365,7 +365,7 @@
       "edge_type": "signal_input"
     },
     {
-      "from":": "VOL_SELL_PRESSURE",
+      "from": "VOL_SELL_PRESSURE",
       "to": "FUS_DIRECTION",
       "edge_type": "signal_input"
     },
