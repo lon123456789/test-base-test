@@ -1,5 +1,468 @@
 {
   "registry_version": "v0",
-  "features": [],
-  "edges": []
+  "engines": 8,
+  "features": [
+    {
+      "feature_id": "SM_WHALE_ACCUMULATION",
+      "feature_name": "Whale Accumulation Pattern",
+      "layer": "smart_money",
+      "owner_engine": "SmartMoney",
+      "source_engine": "SmartMoney",
+      "semantic_concept": "accumulation_signal",
+      "unit_of_observation": "wallet",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Signal",
+      "depends_on": []
+    },
+    {
+      "feature_id": "SM_WHALE_DISTRIBUTION",
+      "feature_name": "Whale Distribution Pattern",
+      "layer": "smart_money",
+      "owner_engine": "SmartMoney",
+      "source_engine": "SmartMoney",
+      "semantic_concept": "distribution_signal",
+      "unit_of_observation": "wallet",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Signal",
+      "depends_on": []
+    },
+    {
+      "feature_id": "SM_SMART_ENTRY",
+      "feature_name": "Smart Entry Points",
+      "layer": "smart_money",
+      "owner_engine": "SmartMoney",
+      "source_engine": "SmartMoney",
+      "semantic_concept": "entry_signal",
+      "unit_of_observation": "wallet",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Signal",
+      "depends_on": []
+    },
+    {
+      "feature_id": "SM_WHALE_EXIT",
+      "feature_name": "Whale Exit Signals",
+      "layer": "smart_money",
+      "owner_engine": "SmartMoney",
+      "source_engine": "SmartMoney",
+      "semantic_concept": "exit_signal",
+      "unit_of_observation": "wallet",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Signal",
+      "depends_on": []
+    },
+    {
+      "feature_id": "CL_CLUSTER_ID",
+      "feature_name": "Cluster Identification",
+      "layer": "clustering",
+      "owner_engine": "Clustering",
+      "source_engine": "Clustering",
+      "semantic_concept": "cluster_membership",
+      "unit_of_observation": "cluster",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "drop",
+      "primary_role": "Grouping",
+      "depends_on": []
+    },
+    {
+      "feature_id": "CL_CLUSTER_SIZE",
+      "feature_name": "Cluster Size",
+      "layer": "clustering",
+      "owner_engine": "Clustering",
+      "source_engine": "Clustering",
+      "semantic_concept": "cluster_cardinality",
+      "unit_of_observation": "cluster",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "drop",
+      "primary_role": "Metric",
+      "depends_on": ["CL_CLUSTER_ID"]
+    },
+    {
+      "feature_id": "CL_CLUSTER_COHESION",
+      "feature_name": "Cluster Cohesion",
+      "layer": "clustering",
+      "owner_engine": "Clustering",
+      "source_engine": "Clustering",
+      "semantic_concept": "cluster_strength",
+      "unit_of_observation": "cluster",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "drop",
+      "primary_role": "Metric",
+      "depends_on": ["CL_CLUSTER_ID"]
+    },
+    {
+      "feature_id": "LIQ_POOL_DEPTH",
+      "feature_name": "Liquidity Pool Depth",
+      "layer": "liquidity",
+      "owner_engine": "Liquidity",
+      "source_engine": "Liquidity",
+      "semantic_concept": "depth_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": []
+    },
+    {
+      "feature_id": "LIQ_SLIPPAGE_ESTIMATE",
+      "feature_name": "Slippage Estimation",
+      "layer": "liquidity",
+      "owner_engine": "Liquidity",
+      "source_engine": "Liquidity",
+      "semantic_concept": "slippage_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["LIQ_POOL_DEPTH"]
+    },
+    {
+      "feature_id": "LIQ_SPREAD",
+      "feature_name": "Bid-Ask Spread",
+      "layer": "liquidity",
+      "owner_engine": "Liquidity",
+      "source_engine": "Liquidity",
+      "semantic_concept": "spread_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": []
+    },
+    {
+      "feature_id": "MKT_PRICE",
+      "feature_name": "Market Price",
+      "layer": "market",
+      "owner_engine": "Market",
+      "source_engine": "Market",
+      "semantic_concept": "price_level",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Base",
+      "depends_on": []
+    },
+    {
+      "feature_id": "MKT_RETURNS",
+      "feature_name": "Market Returns",
+      "layer": "market",
+      "owner_engine": "Market",
+      "source_engine": "Market",
+      "semantic_concept": "returns_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["MKT_PRICE"]
+    },
+    {
+      "feature_id": "MKT_VOLATILITY",
+      "feature_name": "Market Volatility",
+      "layer": "market",
+      "owner_engine": "Market",
+      "source_engine": "Market",
+      "semantic_concept": "volatility_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["MKT_RETURNS"]
+    },
+    {
+      "feature_id": "VOL_TRADING_VOLUME",
+      "feature_name": "Trading Volume",
+      "layer": "volume",
+      "owner_engine": "Volume",
+      "source_engine": "Volume",
+      "semantic_concept": "volume_total",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": []
+    },
+    {
+      "feature_id": "VOL_BUY_PRESSURE",
+      "feature_name": "Buy Pressure",
+      "layer": "volume",
+      "owner_engine": "Volume",
+      "source_engine": "Volume",
+      "semantic_concept": "buy_volume_ratio",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Direction",
+      "depends_on": ["VOL_TRADING_VOLUME"]
+    },
+    {
+      "feature_id": "VOL_SELL_PRESSURE",
+      "feature_name": "Sell Pressure",
+      "layer": "volume",
+      "owner_engine": "Volume",
+      "source_engine": "Volume",
+      "semantic_concept": "sell_volume_ratio",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Direction",
+      "depends_on": ["VOL_TRADING_VOLUME"]
+    },
+    {
+      "feature_id": "FUS_DIRECTION",
+      "feature_name": "Fusion Direction",
+      "layer": "fusion",
+      "owner_engine": "Fusion",
+      "source_engine": "Fusion",
+      "semantic_concept": "fused_direction",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "mark_unavailable",
+      "primary_role": "Direction",
+      "depends_on": ["VOL_BUY_PRESSURE", "VOL_SELL_PRESSURE", "SM_WHALE_ACCUMULATION"]
+    },
+    {
+      "feature_id": "FUS_STRENGTH",
+      "feature_name": "Fusion Strength",
+      "layer": "fusion",
+      "owner_engine": "Fusion",
+      "source_engine": "Fusion",
+      "semantic_concept": "fused_strength",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "mark_unavailable",
+      "primary_role": "Strength",
+      "depends_on": ["FUS_DIRECTION", "MKT_VOLATILITY"]
+    },
+    {
+      "feature_id": "FUS_QUALITY",
+      "feature_name": "Fusion Quality",
+      "layer": "fusion",
+      "owner_engine": "Fusion",
+      "source_engine": "Fusion",
+      "semantic_concept": "signal_quality",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "mark_unavailable",
+      "primary_role": "Quality",
+      "depends_on": ["FUS_STRENGTH", "LIQ_POOL_DEPTH"]
+    },
+    {
+      "feature_id": "RSK_DRAWDOWN",
+      "feature_name": "Drawdown Risk",
+      "layer": "risk",
+      "owner_engine": "Risk",
+      "source_engine": "Risk",
+      "semantic_concept": "downside_risk",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["MKT_RETURNS"]
+    },
+    {
+      "feature_id": "RSK_CONCENTRATION",
+      "feature_name": "Concentration Risk",
+      "layer": "risk",
+      "owner_engine": "Risk",
+      "source_engine": "Risk",
+      "semantic_concept": "concentration_metric",
+      "unit_of_observation": "cluster",
+      "cluster_adjusted": "yes",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["CL_CLUSTER_SIZE"]
+    },
+    {
+      "feature_id": "RSK_LIQUIDITY_RISK",
+      "feature_name": "Liquidity Risk",
+      "layer": "risk",
+      "owner_engine": "Risk",
+      "source_engine": "Risk",
+      "semantic_concept": "liquidity_risk_metric",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Metric",
+      "depends_on": ["LIQ_SLIPPAGE_ESTIMATE", "LIQ_SPREAD"]
+    },
+    {
+      "feature_id": "CONF_SIGNAL_CONFIDENCE",
+      "feature_name": "Signal Confidence",
+      "layer": "confidence",
+      "owner_engine": "Confidence",
+      "source_engine": "Confidence",
+      "semantic_concept": "confidence_score",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Confidence",
+      "depends_on": ["FUS_QUALITY", "RSK_DRAWDOWN"]
+    },
+    {
+      "feature_id": "CONF_DATA_COMPLETENESS",
+      "feature_name": "Data Completeness",
+      "layer": "confidence",
+      "owner_engine": "Confidence",
+      "source_engine": "Confidence",
+      "semantic_concept": "data_coverage",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Quality",
+      "depends_on": []
+    },
+    {
+      "feature_id": "CONF_OVERALL_SCORE",
+      "feature_name": "Overall Confidence Score",
+      "layer": "confidence",
+      "owner_engine": "Confidence",
+      "source_engine": "Confidence",
+      "semantic_concept": "composite_confidence",
+      "unit_of_observation": "holder",
+      "cluster_adjusted": "N/A",
+      "uses_future": false,
+      "missing_data_rule": "forward_fill",
+      "primary_role": "Confidence",
+      "depends_on": ["CONF_SIGNAL_CONFIDENCE", "CONF_DATA_COMPLETENESS"]
+    }
+  ],
+  "edges": [
+    {
+      "from": "SM_WHALE_ACCUMULATION",
+      "to": "FUS_DIRECTION",
+      "edge_type": "signal_input"
+    },
+    {
+      "from": "VOL_BUY_PRESSURE",
+      "to": "FUS_DIRECTION",
+      "edge_type": "signal_input"
+    },
+    {
+      "from": "VOL_SELL_PRESSURE",
+      "to": "FUS_DIRECTION",
+      "edge_type": "signal_input"
+    },
+    {
+      "from": "FUS_DIRECTION",
+      "to": "FUS_STRENGTH",
+      "edge_type": "fusion_cascade"
+    },
+    {
+      "from": "MKT_VOLATILITY",
+      "to": "FUS_STRENGTH",
+      "edge_type": "context_input"
+    },
+    {
+      "from": "FUS_STRENGTH",
+      "to": "FUS_QUALITY",
+      "edge_type": "fusion_cascade"
+    },
+    {
+      "from": "LIQ_POOL_DEPTH",
+      "to": "FUS_QUALITY",
+      "edge_type": "context_input"
+    },
+    {
+      "from": "MKT_PRICE",
+      "to": "MKT_RETURNS",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "MKT_RETURNS",
+      "to": "MKT_VOLATILITY",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "LIQ_POOL_DEPTH",
+      "to": "LIQ_SLIPPAGE_ESTIMATE",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "CL_CLUSTER_ID",
+      "to": "CL_CLUSTER_SIZE",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "CL_CLUSTER_ID",
+      "to": "CL_CLUSTER_COHESION",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "VOL_TRADING_VOLUME",
+      "to": "VOL_BUY_PRESSURE",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "VOL_TRADING_VOLUME",
+      "to": "VOL_SELL_PRESSURE",
+      "edge_type": "derivation"
+    },
+    {
+      "from": "MKT_RETURNS",
+      "to": "RSK_DRAWDOWN",
+      "edge_type": "risk_input"
+    },
+    {
+      "from": "CL_CLUSTER_SIZE",
+      "to": "RSK_CONCENTRATION",
+      "edge_type": "risk_input"
+    },
+    {
+      "from": "LIQ_SLIPPAGE_ESTIMATE",
+      "to": "RSK_LIQUIDITY_RISK",
+      "edge_type": "risk_input"
+    },
+    {
+      "from": "LIQ_SPREAD",
+      "to": "RSK_LIQUIDITY_RISK",
+      "edge_type": "risk_input"
+    },
+    {
+      "from": "FUS_QUALITY",
+      "to": "CONF_SIGNAL_CONFIDENCE",
+      "edge_type": "confidence_input"
+    },
+    {
+      "from": "RSK_DRAWDOWN",
+      "to": "CONF_SIGNAL_CONFIDENCE",
+      "edge_type": "confidence_input"
+    },
+    {
+      "from": "CONF_SIGNAL_CONFIDENCE",
+      "to": "CONF_OVERALL_SCORE",
+      "edge_type": "aggregation"
+    },
+    {
+      "from": "CONF_DATA_COMPLETENESS",
+      "to": "CONF_OVERALL_SCORE",
+      "edge_type": "aggregation"
+    }
+  ]
 }
