@@ -1,6 +1,23 @@
 import json
 import sys
+import os
 from pathlib import Path
+
+# Force reload of all modules
+if 'src.audit.missing_confidence' in sys.modules:
+    del sys.modules['src.audit.missing_confidence']
+if 'src.audit.future_leakage' in sys.modules:
+    del sys.modules['src.audit.future_leakage']
+if 'src.audit.ownership' in sys.modules:
+    del sys.modules['src.audit.ownership']
+if 'src.audit.illegal_feedback' in sys.modules:
+    del sys.modules['src.audit.illegal_feedback']
+if 'src.audit.cluster_scope' in sys.modules:
+    del sys.modules['src.audit.cluster_scope']
+if 'src.audit.double_count' in sys.modules:
+    del sys.modules['src.audit.double_count']
+if 'src.dag.dag_validator' in sys.modules:
+    del sys.modules['src.dag.dag_validator']
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -28,9 +45,8 @@ def run_all():
         print("Error: registry/registry_v0.json is not valid JSON")
         return {}
     
-    # Debug: Print FUS_DIRECTION and FUS_STRENGTH features
-    fus_features = {f["feature_id"]: f for f in registry["features"] 
-                   if f["feature_id"] in ["FUS_DIRECTION", "FUS_STRENGTH"]}
+    sys.stderr.write(f"\n=== AUDIT RUNNING ===\n")
+    sys.stderr.flush()
     
     # Run all audit checks
     missing_conf_result = audit_missing_confidence(registry)
