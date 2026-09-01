@@ -236,7 +236,7 @@
       "unit_of_observation": "holder",
       "cluster_adjusted": "N/A",
       "uses_future": false,
-      "missing_data_rule": "mark_unavailable",
+      "missing_data_rule": "forward_fill",
       "primary_role": "Direction",
       "depends_on": ["VOL_BUY_PRESSURE", "VOL_SELL_PRESSURE", "SM_WHALE_ACCUMULATION"]
     },
@@ -250,7 +250,7 @@
       "unit_of_observation": "holder",
       "cluster_adjusted": "N/A",
       "uses_future": false,
-      "missing_data_rule": "mark_unavailable",
+      "missing_data_rule": "forward_fill",
       "primary_role": "Strength",
       "depends_on": ["FUS_DIRECTION", "MKT_VOLATILITY"]
     },
@@ -365,7 +365,7 @@
       "edge_type": "signal_input"
     },
     {
-      "from": "VOL_SELL_PRESSURE",
+      "from":": "VOL_SELL_PRESSURE",
       "to": "FUS_DIRECTION",
       "edge_type": "signal_input"
     },
