@@ -1,5 +1,5 @@
 import json
-from collections import defaultdict, deque
+from collections import defaultdict
 
 def build_upstream_closure(registry):
     """
@@ -23,7 +23,7 @@ def build_upstream_closure(registry):
         upstream = set()
         for dep in feature.get("depends_on", []):
             upstream.add(dep)
-            upstream.update(dfs_upstream(dep, visited))
+            upstream.update(dfs_upstream(dep, visited.copy()))
         return upstream
     
     for feature_id in features_map:

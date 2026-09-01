@@ -1,4 +1,4 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 
 def build_dag(registry):
     """
@@ -30,7 +30,7 @@ def has_path(dag, start, end, visited=None):
     
     visited.add(start)
     for neighbor in dag.get(start, []):
-        if has_path(dag, neighbor, end, visited):
+        if has_path(dag, neighbor, end, visited.copy()):
             return True
     return False
 

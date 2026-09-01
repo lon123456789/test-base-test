@@ -5,7 +5,6 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from src.dag.dag_builder import build_dag as build_dag_from_registry
 from src.dag.dag_validator import detect_cycles
 from src.audit.future_leakage import audit_future_leakage
 from src.audit.ownership import audit_ownership
