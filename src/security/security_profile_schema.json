@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SecurityProfile",
+  "type": "object",
+  "properties": {
+    "contract_verified": { "type": "boolean" },
+    "contract_age_minutes": { "type": "integer", "minimum": 0 },
+    "proxy_pattern": {
+      "type": "string",
+      "enum": ["none", "safe", "unsafe"]
+    },
+    "mint_authority": { "type": "boolean" },
+    "blacklist_authority": { "type": "boolean" },
+    "upgrade_authority": { "type": "boolean" },
+    "honeypot_status": {
+      "type": "string",
+      "enum": ["safe", "honeypot", "unknown"]
+    },
+    "liquidity_usd": { "type": "number", "minimum": 0 },
+    "holder_top1_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "holder_top10_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "deployer_hold_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "deployer_cluster_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "soft_penalties": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "hard_reject_reason": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": [
+    "contract_verified",
+    "contract_age_minutes",
+    "proxy_pattern",
+    "mint_authority",
+    "blacklist_authority",
+    "upgrade_authority",
+    "honeypot_status",
+    "liquidity_usd",
+    "holder_top1_pct",
+    "holder_top10_pct",
+    "deployer_hold_pct",
+    "deployer_cluster_risk",
+    "soft_penalties",
+    "hard_reject_reason"
+  ]
+}
