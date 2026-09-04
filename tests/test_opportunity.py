@@ -1,5 +1,5 @@
 import unittest
-from opportunity.opportunity_scoring import OpportunityScoring
+from src.opportunity.opportunity_scoring import OpportunityScoring
 
 
 class TestOpportunity(unittest.TestCase):

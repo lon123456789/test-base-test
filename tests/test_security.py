@@ -1,5 +1,5 @@
 import unittest
-from security.security_filter import SecurityFilter
+from src.security.security_filter import SecurityFilter
 
 
 class TestSecurity(unittest.TestCase):

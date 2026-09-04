@@ -1,9 +1,9 @@
-from providers.coingecko_provider import CoinGeckoProvider
-from providers.geckoterminal_provider import GeckoTerminalProvider
-from providers.basescan_provider import BaseScanProvider
+from src.providers.coingecko_provider import CoinGeckoProvider
+from src.providers.geckoterminal_provider import GeckoTerminalProvider
+from src.providers.basescan_provider import BaseScanProvider
 
-from security.security_filter import SecurityFilter
-from opportunity.opportunity_scoring import OpportunityScoring
+from src.security.security_filter import SecurityFilter
+from src.opportunity.opportunity_scoring import OpportunityScoring
 
 
 class Pipeline:

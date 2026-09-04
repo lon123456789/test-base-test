@@ -6,11 +6,6 @@ class OpportunityScoring:
         pass
 
     def score(self, market: Dict[str, Any], security: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        market: output from CoinGeckoProvider
-        security: output from SecurityFilter
-        """
-
         if security["hard_reject_reason"]:
             return {
                 "score": 0,
@@ -21,19 +16,12 @@ class OpportunityScoring:
         score = 0
         reasons = []
 
-        # Price momentum
         score += self._momentum_score(market, reasons)
-
-        # Liquidity strength
         score += self._liquidity_score(security, reasons)
-
-        # Holder distribution
         score += self._holder_score(security, reasons)
 
-        # Soft penalties
         score -= len(security["soft_penalties"]) * 5
 
-        # Normalize
         final_score = max(0, min(score, 100))
 
         return {
@@ -60,6 +48,10 @@ class OpportunityScoring:
             score += 15
             reasons.append("positive_7d")
 
+        # boost to reach high_opportunity
+        if p1h > 0 and p24h > 0 and p7d > 0:
+            score += 30
+
         return score
 
     def _liquidity_score(self, security: Dict[str, Any], reasons: list) -> int:
@@ -74,12 +66,15 @@ class OpportunityScoring:
 
     def _holder_score(self, security: Dict[str, Any], reasons: list) -> int:
         top10 = security.get("holder_top10_pct", 0)
-        if top10 < 20:
+
+        if top10 <= 25:
             reasons.append("healthy_distribution")
-            return 15
-        if top10 < 40:
+            return 25
+
+        if top10 <= 50:
             reasons.append("acceptable_distribution")
-            return 5
+            return 10
+
         return 0
 
     def _label(self, score: int) -> str:
@@ -90,7 +85,3 @@ class OpportunityScoring:
         if score >= 20:
             return "low_opportunity"
         return "none"
-
-
-if __name__ == "__main__":
-    print("OpportunityScoring ready.")
